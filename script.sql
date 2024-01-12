@@ -198,7 +198,6 @@ GO
 CREATE PROCEDURE [dbo].[proc_salariomaximopordepart]
 AS
 BEGIN 
-	SET NOCOUNT ON
 SELECT  MAX(f.salary) AS 'SalarioMaximo', d.departmentname
 FROM funcionarios f
 INNER JOIN alocacoes a
