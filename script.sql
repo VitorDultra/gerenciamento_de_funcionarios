@@ -119,6 +119,7 @@ inner join alocacoes a
 on f.employee_id = a.employee_id
 inner join departamentos d
 on d.department_id = a.department_id
+ORDER BY d.departmentname desc
 
 
 Crie uma consulta que retorne o salário médio dos funcionários por departamento. 
@@ -144,3 +145,84 @@ GROUP BY d.departmentname
 ORDER BY 'SalarioMedio' desc
 
 
+Inclua o nome do departamento e o salário máximo, ordenando de forma decrescente pelo salário máximo.
+
+SELECT  MAX(f.salary) AS 'SalarioMaximo', d.departmentname
+FROM funcionarios f
+INNER JOIN alocacoes a
+ON f.employee_id = a.employee_id
+INNER JOIN departamentos d
+ON a.department_id = d.department_id
+GROUP BY d.departmentname 
+ORDER BY 'SalarioMaximo' desc
+
+Inclua o nome do departamento e o salário minimo, ordenando de forma decrescente pelo salário minimo.
+
+SELECT  MIN(f.salary) AS 'SalarioMinimo', d.departmentname
+FROM funcionarios f
+INNER JOIN alocacoes a
+ON f.employee_id = a.employee_id
+INNER JOIN departamentos d
+ON a.department_id = d.department_id
+GROUP BY d.departmentname 
+ORDER BY 'SalarioMinimo' asc
+
+-- Criação de procedures
+
+CREATE PROCEDURE [dbo].[proc_nomedofuncpordepart]
+AS
+BEGIN 
+SELECT f.firtsname, f.lastname, d.departmentname
+FROM funcionarios f
+INNER JOIN alocacoes a
+ON f.employee_id = a.employee_id
+INNER JOIN departamentos d
+ON d.department_id = a.department_id
+
+END 
+GO
+	
+CREATE PROCEDURE [dbo].[proc_sobrenomedofuncpordepart]
+AS
+BEGIN  
+SELECT f.lastname, d.departmentname
+FROM funcionarios f
+inner join alocacoes a
+on f.employee_id = a.employee_id
+inner join departamentos d
+on d.department_id = a.department_id
+
+END 
+GO
+
+CREATE PROCEDURE [dbo].[proc_salariomaximopordepart]
+AS
+BEGIN 
+	SET NOCOUNT ON
+SELECT  MAX(f.salary) AS 'SalarioMaximo', d.departmentname
+FROM funcionarios f
+INNER JOIN alocacoes a
+ON f.employee_id = a.employee_id
+INNER JOIN departamentos d
+ON a.department_id = d.department_id
+GROUP BY d.departmentname 
+ORDER BY 'SalarioMaximo' desc
+
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[proc_salariominimopordepart]
+AS
+BEGIN 
+SELECT  MIN(f.salary) AS 'SalarioMinimo', d.departmentname
+FROM funcionarios f
+INNER JOIN alocacoes a
+ON f.employee_id = a.employee_id
+INNER JOIN departamentos d
+ON a.department_id = d.department_id
+GROUP BY d.departmentname 
+ORDER BY 'SalarioMinimo' asc
+
+END 
+GO
